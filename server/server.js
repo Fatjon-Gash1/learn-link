@@ -6,7 +6,7 @@ if (process.nextTick.NODE_ENV !== "production") {
 // Import dependencies
 const express = require('express');
 const cors = require('cors');
-const { createMySQLPool, connectToMongoDb } = require("./config/connectToDb"); 
+const { createMySQLPool, connectToMongoDb } = require("./config/databaseConfig"); 
 const postController = require("./controllers/postsController");
 
 // Create express app 
