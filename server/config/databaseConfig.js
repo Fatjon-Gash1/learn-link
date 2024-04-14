@@ -23,7 +23,7 @@ async function connectToMongoDb() {
         await mongoose.connect(process.env.MDB_URL);
         console.log("Connected to MongoDB");
     } catch (error) {
-        console.log(error);
+        console.log("MongoDB connection failed", error);
     }
 }
 
