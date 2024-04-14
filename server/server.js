@@ -7,6 +7,7 @@ if (process.nextTick.NODE_ENV !== "production") {
 const express = require('express');
 const cors = require('cors');
 const { createMySQLPool, connectToMongoDb } = require("./config/databaseConfig"); 
+const configureAdminJS = require("./admin/admin");
 const postController = require("./controllers/postsController");
 
 // Create express app 
@@ -32,6 +33,9 @@ app.get('/posts/:id', postController.fetchPost);
 app.post('/posts', postController.createPost);
 app.put('/posts/:id', postController.updatePost);
 app.delete('/posts/:id', postController.deletePost);
+
+// Configure AdminJS
+configureAdminJS(app);
 
 // Start server
 app.listen(process.env.PORT);
