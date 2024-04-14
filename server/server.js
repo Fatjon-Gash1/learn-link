@@ -24,7 +24,7 @@ connectToMongoDb();
 
 // Routing
 app.get('/', (req, res) => {
-    res.json({message: "test"});
+    res.json({message: "Server Active!"});
 });
 
 app.get('/posts', postController.fetchPosts);
