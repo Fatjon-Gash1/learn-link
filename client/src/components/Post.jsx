@@ -8,7 +8,7 @@ export default function Post({ post }) {
 
   return (
     <div className="my-6 mx-2" key={post._id}>
-      <h3 className="p-4 rounded-md bg-gray-200 break-words overflow-scroll">
+      <h3 className="p-4 rounded-md bg-gray-200 break-words overflow-auto">
         {post.content}
       </h3>
       <div>
