@@ -11,3 +11,7 @@ body {
 *{
     @apply m-0 p-0 box-border;
 }
+
+.bgALogin {
+    background: linear-gradient(90deg, rgba(246,246,255,1) 0%, rgba(233,237,250,1) 50%, rgba(17,42,79,1) 50%, rgba(47,122,193,1) 50%, rgba(2,56,107,1) 100%);
+}
