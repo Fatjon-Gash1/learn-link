@@ -12,16 +12,20 @@ export default function AddPost() {
 
   if (!store.updateForm._id)
     return (
-      <div>
-        <h2>Add Post: </h2>
-        <form onSubmit={store.createPost}>
-          <textarea
-            onChange={store.updateCFormField}
-            value={store.createForm.content}
-            name="content"
-          />
-          <button type="submit">post</button>
-        </form>
-      </div>
+      <form className="m-4 flex" onSubmit={store.createPost}>
+        <textarea
+          className="w-full p-2 resize-none outline-none placeholder-gray-500 bg-transparent"
+          placeholder="Add a post"
+          onChange={store.updateCFormField}
+          value={store.createForm.content}
+          name="content"
+        />
+        <button
+          className="self-end m-1 py-2 px-3 text-white text-sm font-bold bg-blue-500 hover:bg-blue-700 rounded-3xl"
+          type="submit"
+        >
+          post
+        </button>
+      </form>
     );
 }
