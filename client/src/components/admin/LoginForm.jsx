@@ -2,22 +2,22 @@ import React from "react";
 import useAuthStore from "../../stores/admin/authStore";
 
 const LoginForm = () => {
-  const { email, password, setEmail, setPassword } = useAuthStore();
+  const { username, password, setUsername, setPassword } = useAuthStore();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Email:", email);
+    console.log("Username:", username);
     console.log("Password:", password);
     // Authentication logic here
   };
 
   return (
-    <div className="h-screen bgALogin flex justify-center items-center">
+    <div className="mobileSB h-screen bgALogin flex justify-center items-center">
       <div
-        className="w-3/5 h-3/5 py-14 rounded-xl shadow-2xl 
-      bg-slate-300 bg-opacity-30 flex justify-around items-start overflow-auto"
+        className="mobileS0 w-3/5 h-auto py-14 rounded-xl shadow-2xl 
+      bg-slate-300 bg-opacity-10 flex justify-around items-start overflow-auto"
       >
-        <div className="flex flex-col w-1/3">
+        <div className="mobileS1 flex flex-col w-1/3">
           <img
             className="self-center w-28 h-28 mb-10 shadow-xl rounded-2xl"
             src="https://placehold.co/112x112"
@@ -31,16 +31,16 @@ const LoginForm = () => {
             <h1 className="mb-6 self-center text-slate-900 font-semibold text-xl">
               Login to dashboard
             </h1>
-            <label className="mb-2 text-sm font-semibold" htmlFor="email">
-              Email:
+            <label className="mb-2 text-sm font-semibold" htmlFor="username">
+              Username:
             </label>
             <input
               className="mb-6 p-4 text-sm rounded-md h-12 outline-none focus:border-2 focus:border-slate-950 "
-              placeholder="Enter your email"
-              type="email"
-              id="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Enter your username"
+              type="text"
+              id="username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
               required
             />
             <label className="mb-2 text-sm font-semibold" htmlFor="password">
@@ -78,7 +78,8 @@ const LoginForm = () => {
             </button>
           </form>
         </div>
-        <div className="text-white w-1/3 self-center">
+        <div className="text-white w-1/3 self-center
+        mobileS2">
           <h1 className="font-bold text-4xl">Take control of the system</h1>
           <hr className="my-4" />
           <p className="text-right">
