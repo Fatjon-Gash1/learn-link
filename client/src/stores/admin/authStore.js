@@ -1,9 +1,9 @@
 import { create } from "zustand";
 
 const useAuthStore = create((set) => ({
-  email: '',
+  username: '',
   password: '',
-  setEmail: (email) => set((state) => ({ email })),
+  setUsername: (username) => set((state) => ({ username })),
   setPassword: (password) => set((state) => ({ password })),
 }));
 
