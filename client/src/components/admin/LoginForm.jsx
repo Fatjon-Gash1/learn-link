@@ -1,14 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
 import useAuthStore from "../../stores/admin/authStore";
+import axios from "axios";
 
 const LoginForm = () => {
   const { username, password, setUsername, setPassword } = useAuthStore();
+  const [negativeLabel, setNegativeLabel] = useState(false);
+  const [positiveLabel, setPositiveLabel] = useState(false);
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Username:", username);
     console.log("Password:", password);
     // Authentication logic here
+
+    axios.post("")
+    .then(response => {
+      setPositiveLabel(true)
+    })
+    .catch(error => {
+      setNegativeLabel(true)
+    });
+  
   };
 
   return (
@@ -31,7 +44,9 @@ const LoginForm = () => {
             <h1 className="mb-6 self-center text-slate-900 font-semibold text-xl">
               Login to dashboard
             </h1>
-            <label className="mb-2 text-sm font-semibold" htmlFor="username">
+            {negativeLabel && <label className="text-sm text-red-600 ">Wrong Username Or Password</label>}
+            {positiveLabel && <label className="text-sm text-green-600 ">Login Successful!</label>}
+            <label required className="mb-2 text-sm font-semibold" htmlFor="username">
               Username:
             </label>
             <input
@@ -43,7 +58,7 @@ const LoginForm = () => {
               onChange={(e) => setUsername(e.target.value)}
               required
             />
-            <label className="mb-2 text-sm font-semibold" htmlFor="password">
+            <label required className="mb-2 text-sm font-semibold" htmlFor="password">
               Password:
             </label>
             <input
