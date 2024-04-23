@@ -1,4 +1,4 @@
-const Post = require('../models/post');
+const Post = require('../models/secondary_db/Post.model');
 
 const fetchPosts = async (req, res) => {
     // Find all posts
