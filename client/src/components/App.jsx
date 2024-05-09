@@ -1,5 +1,10 @@
 import React, { useEffect } from "react";
-import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+} from "react-router-dom";
 import postsStore from "../stores/postsStore";
 import useAuthStore from "../stores/admin/authStore";
 import LoginForm from "./admin/LoginForm";
@@ -8,7 +13,7 @@ import UserFeed from "./UserFeed";
 
 function App() {
   const store = postsStore();
-  const loggedIn = useAuthStore((state) => state.LoggedIn);
+  const { token } = useAuthStore();
 
   // Hook to fetch posts
   useEffect(() => {
@@ -19,8 +24,13 @@ function App() {
     <Router>
       <Routes>
         <Route path="/home" element={<UserFeed />} />
-        <Route path="/adminlogin" element={<LoginForm />} />
-        <Route path="/dashboard" element={loggedIn ? <Dashboard /> : <Navigate to="/adminlogin" />} />
+        function test () {console.log("token:", token)}
+        <Route exact path="/adminlogin" 
+          element={token ? <Navigate replace to={"/dashboard"} /> : <LoginForm />}
+        />
+        <Route exact path="/dashboard"
+          element={token ? <Dashboard /> : <Navigate replace to={"/adminlogin"} />}
+        />
       </Routes>
     </Router>
   );
