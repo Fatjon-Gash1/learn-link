@@ -17,6 +17,8 @@ function App() {
 
   // Hook to fetch posts
   useEffect(() => {
+    console.log("token:", token);
+
     store.fetchPosts();
   }, []);
 
@@ -24,12 +26,19 @@ function App() {
     <Router>
       <Routes>
         <Route path="/home" element={<UserFeed />} />
-        function test () {console.log("token:", token)}
-        <Route exact path="/adminlogin" 
-          element={token ? <Navigate replace to={"/dashboard"} /> : <LoginForm />}
+        <Route
+          exact
+          path="/adminlogin"
+          element={
+            token ? <Navigate replace to={"/dashboard"} /> : <LoginForm />
+          }
         />
-        <Route exact path="/dashboard"
-          element={token ? <Dashboard /> : <Navigate replace to={"/adminlogin"} />}
+        <Route
+          exact
+          path="/dashboard"
+          element={
+            token ? <Dashboard /> : <Navigate replace to={"/adminlogin"} />
+          }
         />
       </Routes>
     </Router>
