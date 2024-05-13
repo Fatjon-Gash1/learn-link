@@ -1,17 +1,15 @@
 // Load env vars
-if (process.nextTick.NODE_ENV !== "production") {
+if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
 }
 
 // Import dependencies
 const express = require("express");
 const cors = require("cors");
-const primaryDB = require("./models/primary_db");
-const { checkPrimaryDBConn } = require("./models/primary_db/index");
+const { checkPrimaryDBConn, sequelize } = require("./models/primary_db");
 const { connectToSecDB } = require("./config/secDBconfig");
 const postsRoute = require("./routes/posts.route");
 const adminAuthRoute = require("./routes/adminAuth.route");
-const configureAdminJS = require("./admin/admin");
 
 // Create express app
 const app = express();
@@ -27,18 +25,15 @@ checkPrimaryDBConn();
 connectToSecDB();
 
 // Routes
-app.get('/', (req, res) => {
-  res.json({ message: 'Server Active' });
+app.get("/", (req, res) => {
+  res.json({ message: "Server Active" });
 });
 
+app.use("/users", adminAuthRoute);
 app.use("/posts", postsRoute);
-app.use("/adminlogin", adminAuthRoute); 
-
-// Configure AdminJS
-configureAdminJS(app);
 
 // Start server
-primaryDB.sequelize.sync().then(() => {
+sequelize.sync().then(() => {
   app.listen(process.env.PORT, () => {
     console.log("Server running on port " + process.env.PORT);
   });
