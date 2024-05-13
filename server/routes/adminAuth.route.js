@@ -1,9 +1,12 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const authController = require('../controllers/adminAuth.controller');
+const authController = require("../controllers/adminAuth.controller");
+const authenticateToken = require("../middleware/jwtMiddleware");
 
-router.get('/users', authController.getUsers);
+router.get("/", authController.getUsers);
 
-router.post('/auth', authController.adminLogin);
+router.get("/:id", authenticateToken, authController.getUserByID);
+
+router.post("/auth", authController.adminLogin);
 
 module.exports = router;
