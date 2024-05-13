@@ -61,5 +61,6 @@ const checkPrimaryDBConn = async () => {
 
 module.exports = {
   checkPrimaryDBConn,
+  sequelize,
   ...db,
 };
