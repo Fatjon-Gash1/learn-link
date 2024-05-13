@@ -1,25 +1,69 @@
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define("User", {
-    username: {
+    first_name: {
+      type: DataTypes.STRING(50),
+      allowNull: false,
+      validate: {
+        notEmpty: true,
+      },
+    },
+    last_name: {
+      type: DataTypes.STRING(50),
+      allowNull: false,
+      validate: {
+        notEmpty: true,
+      },
+    },
+    email: {
       type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
+      validate: {
+        notEmpty: true,
+        isEmail: true,
+      },
+    },
+    username: {
+      type: DataTypes.STRING(50),
       allowNull: false,
       unique: true,
       validate: {
         notEmpty: true,
       },
     },
-    password: {
-      type: DataTypes.STRING,
+    sex: {
+      type: DataTypes.CHAR(1),
       allowNull: false,
       validate: {
         notEmpty: true,
       },
     },
-    isAdmin: {
-      type: DataTypes.BOOLEAN,
+    date_of_birth: {
+      type: DataTypes.DATEONLY,
       allowNull: false,
-      defaultValue: false 
-    }
+      validate: {
+        notEmpty: true,
+      },
+    },
+    user_type: {
+      type: DataTypes.CHAR(1),
+      allowNull: false,
+      validate: {
+        notEmpty: true,
+      },
+    },
+    password: {
+      type: DataTypes.CHAR(60),
+      allowNull: false,
+      validate: {
+        notEmpty: true,
+      },
+    },
+    access_level: {
+      type: DataTypes.ENUM("0", "1", "2"),
+      allowNull: false,
+      defaultValue: "0",
+    },
   });
 
   return User;
