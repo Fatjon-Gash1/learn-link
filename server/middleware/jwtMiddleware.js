@@ -1,5 +1,10 @@
+// Load env vars
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
+}
+
 const jwt = require("jsonwebtoken");
-require("dotenv").config();
+
 
 function authenticateToken(req, res, next) {
     const token = req.header("Authorization")?.split(" ")[1];
