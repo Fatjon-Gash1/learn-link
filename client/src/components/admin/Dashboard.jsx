@@ -9,8 +9,10 @@ const Dashboard = () => {
     detectTokenExpiry();
     getData();
 
-    const interval = setInterval(detectTokenExpiry, 5000);
-    return () => clearInterval(interval);
+    const interval = setInterval(detectTokenExpiry, 10000);
+    return () => {
+      clearInterval(interval);
+    };
   }, []);
 
   return (

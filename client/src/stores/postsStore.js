@@ -1,6 +1,9 @@
 import { create } from "zustand";
 import axios from "axios";
 
+
+const host = '192.168.0.15';
+
 const postsStore = create((set) => ({
   posts: null,
 
@@ -15,7 +18,7 @@ const postsStore = create((set) => ({
 
   fetchPosts: async () => {
     // Fetch posts from the server
-    const resp = await axios.get("http://localhost:3000/posts");
+    const resp = await axios.get(`http://${host}:3000/posts`);
 
     // Set the posts state
     set({ posts: resp.data.posts });
@@ -39,7 +42,7 @@ const postsStore = create((set) => ({
 
     // Create a post
     const { createForm, posts } = postsStore.getState();
-    const resp = await axios.post("http://localhost:3000/posts", createForm);
+    const resp = await axios.post(`http://${host}:3000/posts`, createForm);
 
     // Update and clear form state
     set({
@@ -52,7 +55,7 @@ const postsStore = create((set) => ({
     const { posts } = postsStore.getState();
 
     // Delete the post
-    const resp = await axios.delete(`http://localhost:3000/posts/${_id}`);
+    const resp = await axios.delete(`http://${host}:3000/posts/${_id}`);
 
     // Update state
     const newPosts = posts.filter((post) => {
@@ -94,7 +97,7 @@ const postsStore = create((set) => ({
     } = postsStore.getState();
 
     // Send the update request
-    const resp = await axios.put(`http://localhost:3000/posts/${_id}`, {
+    const resp = await axios.put(`http://${host}:3000/posts/${_id}`, {
       content,
     });
 

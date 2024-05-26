@@ -23,13 +23,12 @@ body {
 }
 
 @media screen and (max-width: 600px) {
-
-    .mobileSB {
-        background: rgba(246, 246, 255, 1);
-    }
-    .mobileS0 {
-      @apply w-9/12;
-    }
+  .mobileSB {
+    background: rgba(246, 246, 255, 1);
+  }
+  .mobileS0 {
+    @apply w-9/12;
+  }
   .mobileS1 {
     @apply w-10/12;
   }

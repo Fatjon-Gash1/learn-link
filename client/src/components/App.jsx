@@ -13,11 +13,13 @@ import UserFeed from "./UserFeed";
 
 function App() {
   const store = postsStore();
-  const { token } = useAuthStore();
+  const { accessToken } = useAuthStore();
+  
+  console.log('env var: ', process.env.REACT_APP_TEST);
 
   // Hook to fetch posts
   useEffect(() => {
-    console.log("token:", token);
+    console.log("accessToken call from app.jsx:", accessToken);
 
     store.fetchPosts();
   }, []);
@@ -30,14 +32,14 @@ function App() {
           exact
           path="/adminlogin"
           element={
-            token ? <Navigate replace to={"/dashboard"} /> : <LoginForm />
+            accessToken ? <Navigate replace to={"/dashboard"} /> : <LoginForm />
           }
         />
         <Route
           exact
           path="/dashboard"
           element={
-            token ? <Dashboard /> : <Navigate replace to={"/adminlogin"} />
+            accessToken ? <Dashboard /> : <Navigate replace to={"/adminlogin"} />
           }
         />
       </Routes>
