@@ -52,20 +52,25 @@ async function adminLogin(req, res) {
     // Generate refresh token
     const refreshToken = jwt.sign(
       { userId: user.id, username: user.username },
-      process.env.JWT_SECRET,
+      process.env.REFRESH_TOKEN_SECRET,
       { expiresIn: EXPIRY.REFRESH_TOKEN }
     );
 
     // Generate access token
     const accessToken = jwt.sign(
       { userId: user.id, username: user.username },
-      process.env.JWT_SECRET,
+      process.env.ACCESS_TOKEN_SECRET,
       { expiresIn: EXPIRY.ACCESS_TOKEN }
     );
 
     res
       .status(200)
-      .cookie("refreshToken", refreshToken, { httpOnly: true, secure: false, sameSite: "None", maxAge: 20000, domain: "192.168.0.15" })
+      .cookie("refreshToken", refreshToken, {
+        httpOnly: true,
+        secure: false,
+        sameSite: "Lax",
+        maxAge: 20000,
+      })
       .json({ accessToken, userID: user.id, message: "Login successful" });
   } catch (error) {
     console.error("Error logging in:", error);
@@ -78,23 +83,29 @@ const generateNewToken = (req, res) => {
   try {
     const accessToken = jwt.sign(
       { userId: userID, username: username },
-      process.env.JWT_SECRET,
+      process.env.ACCESS_TOKEN_SECRET,
       { expiresIn: EXPIRY.ACCESS_TOKEN }
     );
+
     const refreshToken = jwt.sign(
       { userId: userID, username: username },
-      process.env.JWT_SECRET,
+      process.env.REFRESH_TOKEN_SECRET,
       { expiresIn: EXPIRY.REFRESH_TOKEN }
     );
+
     res
       .status(200)
-      .json({ accessToken })
-      .cookie("refreshToken", refreshToken, { httpOnly: true, secure: false, sameSite: "None", maxAge: 20000 });
+      .cookie("refreshToken", refreshToken, {
+        httpOnly: true,
+        secure: false,
+        sameSite: "Lax",
+        maxAge: 20000,
+      })
+      .json({ accessToken });
   } catch (error) {
     console.error("Error generating new tokens:", error);
     res.status(500).json({ message: "Internal server error" });
   }
-}
-
+};
 
 module.exports = { getUsers, getUserByID, adminLogin, generateNewToken };

@@ -5,20 +5,20 @@ if (process.env.NODE_ENV !== "production") {
 
 const jwt = require("jsonwebtoken");
 
+function authenticateAccessToken(req, res, next) {
+  const accessToken = req.header("Authorization")?.split(" ")[1];
 
-function authenticateToken(req, res, next) {
-  const token = req.header("Authorization")?.split(" ")[1];
-
-  if (!token) {
-    return res.status(401).json({ message: "Access denied. Token missing." });
+  if (!accessToken) {
+    return res
+      .status(401)
+      .json({ message: "Access denied. Access token missing." });
   }
 
-  jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+  jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
     if (err) {
-      console.log('middleware token: ', token);
-      return res.status(403).json({ message: "Invalid token." });
+      console.log("middleware token: ", accessToken); // For debugging
+      return res.status(403).json({ message: "Invalid access token." });
     }
-
     req.user = user;
     next();
   });
@@ -26,11 +26,13 @@ function authenticateToken(req, res, next) {
 
 function authenticateRefreshToken(req, res, next) {
   const refreshToken = req.cookies.refreshToken;
-  console.log('Refresh Token:', refreshToken);
+  console.log("Refresh Token:", refreshToken); // For debugging
   if (!refreshToken) {
-    return res.status(401).json({ message: "Access denied. Refresh token missing."});
+    return res
+      .status(401)
+      .json({ message: "Access denied. Refresh token missing." });
   }
-  jwt.verify(refreshToken, process.env.JWT_SECRET, (err, user) => {
+  jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
     if (err) {
       return res.status(403).json({ message: "Invalid refresh token." });
     }
@@ -39,4 +41,4 @@ function authenticateRefreshToken(req, res, next) {
   });
 }
 
-module.exports = { authenticateToken, authenticateRefreshToken };
+module.exports = { authenticateAccessToken, authenticateRefreshToken };
