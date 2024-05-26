@@ -1,8 +1,8 @@
 {
   "development": {
     "username": "root",
-    "password": null,
-    "database": "learnLinkDB",
+    "password": "Toni2002",
+    "database": "learnlinkdb",
     "host": "localhost",
     "dialect": "mysql",
     "authenticationString": ""
