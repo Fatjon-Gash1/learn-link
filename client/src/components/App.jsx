@@ -12,14 +12,13 @@ import Dashboard from "./admin/Dashboard";
 import UserFeed from "./UserFeed";
 
 function App() {
+  console.log("env var react1: ", process.env.REACT_APP_BLA); // For testing
+
   const store = postsStore();
   const { accessToken } = useAuthStore();
-  
-  console.log('env var: ', process.env.REACT_APP_TEST);
 
-  // Hook to fetch posts
   useEffect(() => {
-    console.log("accessToken call from app.jsx:", accessToken);
+    console.log("accessToken call from app.jsx:", accessToken); // For debugging
 
     store.fetchPosts();
   }, []);
@@ -27,7 +26,7 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/home" element={<UserFeed />} />
+        <Route path="/feed" element={<UserFeed />} />
         <Route
           exact
           path="/adminlogin"
@@ -39,7 +38,11 @@ function App() {
           exact
           path="/dashboard"
           element={
-            accessToken ? <Dashboard /> : <Navigate replace to={"/adminlogin"} />
+            accessToken ? (
+              <Dashboard />
+            ) : (
+              <Navigate replace to={"/adminlogin"} />
+            )
           }
         />
       </Routes>

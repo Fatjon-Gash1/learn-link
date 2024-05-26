@@ -2,9 +2,8 @@ import { create } from "zustand";
 import axios from "axios";
 
 const useAuthStore = create((set) => {
-  const host = "192.168.0.15";
+  const host = "localhost";
   const storedAccessToken = localStorage.getItem("accessToken");
-
 
   return {
     username: "",
@@ -26,10 +25,14 @@ const useAuthStore = create((set) => {
       }
 
       try {
-        const resp = await axios.post(`http://${host}:3000/users/auth`, {
-          username,
-          password,
-        }/*, { withCredentials: true }*/);
+        const resp = await axios.post(
+          `http://${host}:3000/users/auth`,
+          {
+            username,
+            password,
+          },
+          { withCredentials: true }
+        );
         const { accessToken } = resp.data;
         localStorage.setItem("accessToken", accessToken);
         set({ accessToken });
@@ -68,7 +71,7 @@ const useAuthStore = create((set) => {
 
     detectTokenExpiry: async () => {
       const token = localStorage.getItem("accessToken");
-      console.log('access token: ', token);
+      console.log("access token: ", token); // For debugging
       if (token) {
         const decodedToken = JSON.parse(atob(token.split(".")[1]));
         const expirationTime = decodedToken.exp * 1000;
@@ -77,26 +80,26 @@ const useAuthStore = create((set) => {
         const currentTime = Date.now();
         if (currentTime > expirationTime - 7000) {
           try {
-            const resp = await axios.post(`http://${host}:3000/users/Token`, {}, { withCredentials: true });
+            const resp = await axios.post(
+              `http://${host}:3000/users/token`,
+              { userID, username },
+              { withCredentials: true }
+            );
             localStorage.setItem("accessToken", resp.data.accessToken);
             set({
               accessToken: resp.data.accessToken,
             });
-            return;
-          }
-          catch (err) {
+          } catch (err) {
             localStorage.removeItem("accessToken");
             set({
-              accessToken: null
+              accessToken: null,
             });
-            return;
           }
         }
       } else {
         set({
-          accessToken: null
+          accessToken: null,
         });
-        return;
       }
     },
 

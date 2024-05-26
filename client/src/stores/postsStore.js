@@ -2,7 +2,7 @@ import { create } from "zustand";
 import axios from "axios";
 
 
-const host = '192.168.0.15';
+const host = 'localhost';
 
 const postsStore = create((set) => ({
   posts: null,
